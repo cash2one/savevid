@@ -1,0 +1,5 @@
+Django==1.8.5
+MySQL-Python==1.2.5
+requests==2.8.1
+ipython==4.0.0
+Scrapy==1.0.3
