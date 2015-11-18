@@ -2,6 +2,8 @@ from lxml import etree
 from StringIO import StringIO
 import re
 import requests
+import urlparse
+import urllib
 from lib.site import Site, VideoNotFound
 
 class Weibo(Site):
@@ -16,18 +18,31 @@ class Weibo(Site):
         links = tree.xpath('//embed/@flashvars')
 
         if len(links) == 0:
+            return self.extract_src(tree)
+
+        flashvars = links[0]
+        patt = re.compile(r'list=(.*)')
+        match = patt.search(flashvars)
+        if not match:
+            raise VideoNotFound()
+        link = urllib.unquote(match.group(1))
+        path = self.extract_mp4(link)
+        netloc = urlparse.urlsplit(link).netloc
+        vid_url = "http://%s/%s" % (netloc, path)
+        return vid_url
+
+    def extract_mp4(self, url):
+        r = requests.get(url)
+        result = r.text
+        lines = result.split("\n")
+        patt = re.compile(r'^#')
+        lines = filter(lambda x: not patt.match(x), lines)
+        if len(lines) == 0:
             raise VideoNotFound()
 
-        link = links[0]
-        print link
-        patt = re.compile(r"\?scid=(.*?)&")
-        match = patt.search(link)
-        if match:
-            scid = match.group(1)
-            link = "http://gslb.miaopai.com/stream/%s.mp4" % (scid)
-        return link
+        return lines[0]
 
 if __name__ == "__main__":
     weibo = Weibo()
-    print weibo.get_link('http://video.weibo.com/player/1034:172d8e9a6a92e9d530f730e8a3dc1587/v.swf')
-    print weibo.get_link('http://video.weibo.com/show?fid=1034:82947d751e791d064c2db09cd9c6c97b')
+#    print weibo.get_link('http://video.weibo.com/player/1034:172d8e9a6a92e9d530f730e8a3dc1587/v.swf')
+    print weibo.get_link('http://video.weibo.com/show?fid=1034:fbc31906b81fc46b1408757ea8d5c8d2')
