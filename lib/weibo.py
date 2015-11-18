@@ -29,5 +29,4 @@ class Weibo(Site):
 
 if __name__ == "__main__":
     weibo = Weibo()
-    print weibo.get_link('http://video.weibo.com/player/1034:172d8e9a6a92e9d530f730e8a3dc1587/v.swf')
     print weibo.get_link('http://video.weibo.com/show?fid=1034:82947d751e791d064c2db09cd9c6c97b')
