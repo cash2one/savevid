@@ -16,7 +16,7 @@ class Vlook(Site):
         patt = re.compile(r'player_src=([^"]*)"')
         match = patt.search(result)
         if not match:
-            raise VideoNotFound()
+            raise VideoNotFound(url)
 
         src = urllib.unquote(match.group(1))
         r = requests.head(src)

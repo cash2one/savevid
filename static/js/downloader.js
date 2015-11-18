@@ -56,7 +56,21 @@ var downloader = {
                 url: '/downloader/get_link/',
                 data: data,
                 success: function(resp) {
-
+                    var tmpl = '<div class="media"> \
+                      <div class="media-left media-middle"> \
+                        <a href="{{ vid_link }}"> \
+                          <img class="media-object vid-img" src="{{ img_link }}" alt="{{ img_desc }}"> \
+                        </a> \
+                      </div> \
+                      <div class="media-body"> \
+                        <h4 class="media-heading">{{ img_desc }}</h4> \
+                        <a href="{{ vid_link }}">下载地址</a> \
+                      </div> \
+                    </div>';
+                    var html = Mustache.render(tmpl, { vid_link: resp.result.vid,
+                        img_link: resp.result.img
+                    });
+                    $("#result").html(html);
                 }
             });
         });

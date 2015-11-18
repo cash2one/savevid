@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 import re
-import lib
+from lib import *
 import urlparse
 
 # Create your views here.
@@ -9,21 +9,24 @@ def index(request):
     return render(request, 'index.html')
 
 def get_link(request):
-    data = request.POST.get("url", "")
-    if data == "":
+    url = request.POST.get("url", "")
+    if url == "":
         return JsonResponse({"success": True, "msg": "empty url"})
-    parsed = urlparse.urlsplit(data)
+    parsed = urlparse.urlsplit(url)
     netloc = parsed.netloc
     site = None
     if netloc == "video.weibo.com":
-        site = lib.weibo.Weibo()
+        site = weibo.Weibo()
     elif netloc == "www.meipai.com":
-        site = lib.meipai.Meipai()
+        site = meipai.Meipai()
     elif netloc == "www.miaopai.com":
-        site = lib.miaopai.Miaopai()
+        site = miaopai.Miaopai()
     elif netloc == "www.weipai.cn":
-        site = lib.weipai.Weipai()
+        site = weipai.Weipai()
     elif netloc == "www.vlook.cn":
-        site = lib.vlook.Vlook()
-    link = site.get_link(data)
-    return JsonResponse({"success": True, "msg": ""})
+        site = vlook.Vlook()
+    else:
+        return JsonResponse({"success": True, "msg": "video not found"})
+
+    data = site.get_link(url)
+    return JsonResponse({"success": True, "msg": "", "result": data})
