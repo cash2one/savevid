@@ -23,5 +23,7 @@ def get_link(request):
         site = lib.miaopai.Miaopai()
     elif netloc == "www.weipai.cn":
         site = lib.weipai.Weipai()
+    elif netloc == "www.vlook.cn":
+        site = lib.vlook.Vlook()
     link = site.get_link(data)
     return JsonResponse({"success": True, "msg": ""})
