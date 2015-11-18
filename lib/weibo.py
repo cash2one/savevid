@@ -18,7 +18,7 @@ class Weibo(Site):
         links = tree.xpath('//embed/@flashvars')
 
         if len(links) == 0:
-            return self.extract_src(tree)
+            raise VideoNotFound()
 
         flashvars = links[0]
         patt = re.compile(r'list=(.*)')
