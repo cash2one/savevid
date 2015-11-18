@@ -13,10 +13,16 @@ class Meipai(Site):
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
         links = tree.xpath('//div[@id="detailVideo"]/@data-video')
-        if len(links) > 0:
-            link = links[0]
-            return link
-        raise VideoNotFound(url)
+        if len(links) == 0:
+            raise VideoNotFound(url)
+        vid_link = links[0]
+
+        img_links = tree.xpath('//div[@id="detailVideo"]/img/@src')
+        img_link = ''
+        if len(img_links) > 0:
+            img_link = img_links[0]
+
+        return {"vid": vid_link, "img": img_link}
 
 if __name__ == "__main__":
     meipai = Meipai()

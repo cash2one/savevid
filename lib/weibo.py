@@ -28,8 +28,12 @@ class Weibo(Site):
         link = urllib.unquote(match.group(1))
         path = self.extract_mp4(link)
         netloc = urlparse.urlsplit(link).netloc
-        vid_url = "http://%s/%s" % (netloc, path)
-        return vid_url
+        vid_link = "http://%s/%s" % (netloc, path)
+        img_links = tree.xpath('//img/@src')
+        img_link = ''
+        if len(img_links) > 0:
+            img_link = img_links[0]
+        return {"vid": vid_link, "img": img_link}
 
     def extract_mp4(self, url):
         r = requests.get(url)

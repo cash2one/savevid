@@ -15,15 +15,21 @@ class Miaopai(Site):
         tree = etree.parse(StringIO(result), parser)
         links = tree.xpath('//param[@name="src"]/@value')
 
-        if len(links) > 0:
-            link = links[0]
-            patt = re.compile(r"\?scid=(.*?)&")
-            match = patt.search(link)
-            if match:
-                scid = match.group(1)
-                link = "http://gslb.miaopai.com/stream/%s.mp4" % (scid)
-            return link
-        raise VideoNotFound(url)
+        if len(links) == 0:
+            raise VideoNotFound(url)
+        link = links[0]
+        patt = re.compile(r"\?scid=(.*?)&")
+        match = patt.search(link)
+        if not match:
+            raise VideoNotFound(url)
+        scid = match.group(1)
+        vid_link = "http://gslb.miaopai.com/stream/%s.mp4" % (scid)
+        img_links = tree.xpath('//div[@class="video_img"]/img/@src')
+        img_link = ''
+        if len(img_links) > 0:
+            img_link = img_links[0]
+
+        return {"vid": vid_link, "img": img_link}
 
 if __name__ == "__main__":
     miaopai = Miaopai()

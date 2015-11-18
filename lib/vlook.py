@@ -20,8 +20,14 @@ class Vlook(Site):
 
         src = urllib.unquote(match.group(1))
         r = requests.head(src)
-        link = r.headers["Location"]
-        return link
+        vid_link = r.headers["Location"]
+
+        patt = re.compile(r'player_poster=([^&]*)&')
+        match = patt.search(result)
+        img_link = ''
+        if match:
+            img_link = urllib.unquote(match.group(1))
+        return {"vid": vid_link, "img": img_link}
 
 if __name__ == "__main__":
     site = Vlook()
