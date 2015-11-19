@@ -1,40 +1,25 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>长颈鹿</title>
-        <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
-        <link rel="stylesheet" href="/static/css/savevid.css" type="text/css">
-        <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-        <script src="/static/js/mustache.min.js"></script>
-        <script src="/static/js/downloader.js"></script>
-        <script>
-            $(document).ready(function() {
-                downloader.init();
-            });
-        </script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row desc">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <p class="lead">下载美拍、秒拍视频</p>
-                    <div class="input-group">
-                        <input type="text" name="url" class="form-control" placeholder="输入视频页面链接：如 http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm">
-                        <span class="input-group-btn">
-                            {% csrf_token %}
-                            <button class="btn btn-default" id="download" type="button">下载</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="row logo">
-                <div class="col-lg-8 col-lg-offset-2">
-                    <img border=0 src="/static/img/miaopai.png">
-                </div>
-            </div>
-            <div id="result">
-            </div>
+{% extends "base.html" %}
+{% block content %}
+<div class="row desc">
+    <div class="col-lg-8 col-lg-offset-2">
+        <p class="text-center h1 logo">长颈鹿视频下载</p>
+        <div class="input-group">
+            <input type="text" name="url" class="form-control" placeholder="">
+            <span class="input-group-btn">
+                {% csrf_token %}
+                <button class="btn btn-default" id="download" type="button">下载</button>
+            </span>
         </div>
-    </body>
-</html>
+        <div>
+            <span>输入视频页面链接：如 <a target='_blank' href="http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm">http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm</a></span>
+        </div>
+    </div>
+</div>
+<div class="row site-log">
+    <div class="col-lg-8 col-lg-offset-2">
+        <img border=0 src="/static/img/miaopai.png">
+    </div>
+</div>
+<div id="result">
+</div>
+{% endblock %}

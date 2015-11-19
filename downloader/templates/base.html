@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>长颈鹿</title>
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+        <link rel="stylesheet" href="/static/css/downloader.css" type="text/css">
+        <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
+        <script src="/static/js/mustache.min.js"></script>
+        <script src="/static/js/downloader.js"></script>
+        <script>
+            $(document).ready(function() {
+                downloader.init();
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            {% block content %}{% endblock %}
+            <div class="footer">
+                <div class="links">
+                    <div class="link first"><a href="/contact/">联系我们</a></div>
+                    <div class="link"><a href="/feedback/">意见反馈</a></div>
+                    <script src=""></script>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+

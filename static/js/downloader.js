@@ -64,7 +64,7 @@ var downloader = {
                       </div> \
                       <div class="media-body"> \
                         <h4 class="media-heading">{{ img_desc }}</h4> \
-                        <a href="{{ vid_link }}">下载地址</a> \
+                        <button type="button" class="btn btn-lg btn-success" href="{{ vid_link }}">下载地址</button> \
                       </div> \
                     </div>';
                     var html = Mustache.render(tmpl, { vid_link: resp.result.vid,
