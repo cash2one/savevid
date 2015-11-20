@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="row desc">
+<div class="row brand">
     <div class="col-lg-8 col-lg-offset-2">
-        <p class="text-center h1 logo">长颈鹿视频下载</p>
+        <h1 class="text-center">爱拍</h1>
+        <p class="text-center text-muted logo"><small>让下载视频像看视频一样简单</small></p>
         <div class="input-group">
             <input type="text" name="url" class="form-control" placeholder="">
             <span class="input-group-btn">
@@ -11,15 +12,13 @@
             </span>
         </div>
         <div>
-            <span>输入视频页面链接：如 <a target='_blank' href="http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm">http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm</a></span>
+            <span>输入视频页面链接：如<a target='_blank' href="http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm">http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm</a></span>
+        </div>
+        <div class="site-logo">
+            <img border=0 src="/static/img/miaopai.png">
+        </div>
+        <div id="result">
         </div>
     </div>
-</div>
-<div class="row site-log">
-    <div class="col-lg-8 col-lg-offset-2">
-        <img border=0 src="/static/img/miaopai.png">
-    </div>
-</div>
-<div id="result">
 </div>
 {% endblock %}

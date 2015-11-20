@@ -2,7 +2,7 @@
     min-height:100%;
 }
 
-.desc {
+.brand {
     margin-top:100px;
 }
 
@@ -15,22 +15,21 @@
     margin-bottom:100px;
 }
 
-#result {
+div.dn-link {
     margin-top:50px;
+    border: 1px solid #ddd;
+    padding: 4px;
 }
 
 .vid-img {
-    height:150px;
+    height:100px;
 }
 
 div.footer {
     clear:both;
-    width:100%;
     height:70px;
     margin-top:50px;
     border-top:1px solid #e5e5e5;
-    margin-left:auto;
-    margin-right:auto;
     /*font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;*/
     font-size:12px
 }
@@ -42,7 +41,7 @@ div.links{
     margin-right:auto;
     padding-left:10px;
     padding-right:10px;
-    width:180px
+    width:180px;
 }
 
 div.links>.link{
@@ -59,3 +58,6 @@ div.link>a{
     text-decoration:none
 }
 
+div#result {
+    margin-top: 20px;
+}

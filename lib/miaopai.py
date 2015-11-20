@@ -29,7 +29,12 @@ class Miaopai(Site):
         if len(img_links) > 0:
             img_link = img_links[0]
 
-        return {"vid": vid_link, "img": img_link}
+        descs = tree.xpath('//div[@class="introduction"]/p')
+        desc = ''
+        if len(descs) > 0:
+            desc = descs[0].text
+
+        return {"vid": vid_link, "img": img_link, "desc": desc}
 
 if __name__ == "__main__":
     miaopai = Miaopai()

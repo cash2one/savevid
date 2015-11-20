@@ -56,20 +56,19 @@ var downloader = {
                 url: '/downloader/get_link/',
                 data: data,
                 success: function(resp) {
-                    var tmpl = '<div class="media"> \
+                    var tmpl = ' \
+                    <div class="media dn-link"> \
                       <div class="media-left media-middle"> \
-                        <a href="{{ vid_link }}"> \
-                          <img class="media-object vid-img" src="{{ img_link }}" alt="{{ img_desc }}"> \
+                        <a href="{{ vid }}"> \
+                          <img class="media-object vid-img" src="{{ img }}" alt="{{ desc }}"> \
                         </a> \
                       </div> \
                       <div class="media-body"> \
-                        <h4 class="media-heading">{{ img_desc }}</h4> \
-                        <button type="button" class="btn btn-lg btn-success" href="{{ vid_link }}">下载地址</button> \
+                        <h4 class="media-heading">{{ desc }}</h4> \
+                        <a class="btn btn-info" href="{{ vid }}" download="{{ vid }}">下载地址</a> \
                       </div> \
                     </div>';
-                    var html = Mustache.render(tmpl, { vid_link: resp.result.vid,
-                        img_link: resp.result.img
-                    });
+                    var html = Mustache.render(tmpl, resp.result);
                     $("#result").html(html);
                 }
             });
