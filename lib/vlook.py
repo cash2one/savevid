@@ -11,7 +11,7 @@ class Vlook(Site):
         pass
 
     def get_link(self, url):
-        r = requests.get(url)
+        r = requests.get(url, timeout=5)
         result = r.text
         patt = re.compile(r'player_src=([^"]*)"')
         match = patt.search(result)
@@ -19,7 +19,7 @@ class Vlook(Site):
             raise VideoNotFound(url)
 
         src = urllib.unquote(match.group(1))
-        r = requests.head(src)
+        r = requests.head(src, timeout=5)
         vid_link = r.headers["Location"]
 
         patt = re.compile(r'player_poster=([^&]*)&')
@@ -27,7 +27,14 @@ class Vlook(Site):
         img_link = ''
         if match:
             img_link = urllib.unquote(match.group(1))
-        return {"vid": vid_link, "img": img_link}
+
+        parser = etree.HTMLParser()
+        tree = etree.parse(StringIO(result), parser)
+        descs = tree.xpath('//div[@class="detail_des"]')
+        desc = ""
+        if len(descs) > 0:
+            desc = descs[0].text
+        return {"vid": vid_link, "img": img_link, "desc": desc}
 
 if __name__ == "__main__":
     site = Vlook()

@@ -11,7 +11,7 @@ class Weipai(Site):
         pass
 
     def get_link(self, url):
-        r = requests.get(url)
+        r = requests.get(url, timeout=5)
         result = r.text
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
@@ -29,7 +29,7 @@ class Weipai(Site):
 
         vid = match.group(1)
         share_link = 'http://share.weipai.cn/video/play/id/%s/type/theater/source/undefine' % (vid)
-        r = requests.get(share_link)
+        r = requests.get(share_link, timeout=5)
         result = r.text
         patt = re.compile(r"'(http.*?)'")
         match_url = patt.search(result)
@@ -52,7 +52,7 @@ class Weipai(Site):
         img_link = 0
         if len(img_links) > 0:
             img_link = img_links[0]
-        return {"vid": vid_link, "img": img_link}
+        return {"vid": vid_link, "img": img_link, "desc": ""}
 
 if __name__ == "__main__":
     weipai = Weipai()

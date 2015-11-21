@@ -2,14 +2,16 @@ from lxml import etree
 from StringIO import StringIO
 import re
 import requests
+from lib.timeit import timeit
 from lib.site import Site, VideoNotFound
 
 class Miaopai(Site):
     def __init__(self):
         pass
 
+    @timeit
     def get_link(self, url):
-        r = requests.get(url)
+        r = requests.get(url, timeout=30)
         result = r.text
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
@@ -29,6 +31,7 @@ class Miaopai(Site):
         if len(img_links) > 0:
             img_link = img_links[0]
 
+        print scid
         descs = tree.xpath('//div[@class="introduction"]/p')
         desc = ''
         if len(descs) > 0:

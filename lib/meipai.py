@@ -8,7 +8,7 @@ class Meipai(Site):
         pass
 
     def get_link(self, url):
-        r = requests.get(url)
+        r = requests.get(url, timeout=5)
         result = r.text
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
@@ -22,7 +22,9 @@ class Meipai(Site):
         if len(img_links) > 0:
             img_link = img_links[0]
 
-        return {"vid": vid_link, "img": img_link}
+        descs = tree.xpath('//h1[@class="detail-description break"]/text()')
+        desc = " ".join(descs)
+        return {"vid": vid_link, "img": img_link, "desc": desc}
 
 if __name__ == "__main__":
     meipai = Meipai()

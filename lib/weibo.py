@@ -11,7 +11,7 @@ class Weibo(Site):
         pass
 
     def get_link(self, url):
-        r = requests.get(url)
+        r = requests.get(url, timeout=5)
         result = r.text
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
@@ -33,10 +33,10 @@ class Weibo(Site):
         img_link = ''
         if len(img_links) > 0:
             img_link = img_links[0]
-        return {"vid": vid_link, "img": img_link}
+        return {"vid": vid_link, "img": img_link, "desc": ""}
 
     def extract_mp4(self, url):
-        r = requests.get(url)
+        r = requests.get(url, timeout=5)
         result = r.text
         lines = result.split("\n")
         patt = re.compile(r'^#')
