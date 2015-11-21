@@ -61,7 +61,6 @@ div#result {
 
 span.stat-text {
     font-size: 16px;
-    font-weight: bold;
 }
 
 div.footer {
@@ -80,7 +79,7 @@ div.links{
     margin-right:auto;
     padding-left:10px;
     padding-right:10px;
-    width:180px;
+    width:100px;
 }
 
 div.links>.link{

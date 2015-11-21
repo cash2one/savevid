@@ -55,7 +55,7 @@ var downloader = {
             };
             $.ajax({
                 type: 'POST',
-                url: '/downloader/get_link/',
+                url: '/get_link/',
                 data: data,
                 success: function(resp) {
                     if(resp.success) {

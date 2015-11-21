@@ -33,3 +33,6 @@ def get_link(request):
     except:
         return JsonResponse({"success": False, "msg": "failed to get download link"})
     return JsonResponse({"success": True, "msg": "", "result": data})
+
+def aboutus(request):
+    return render(request, 'aboutus.html')
