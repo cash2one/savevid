@@ -31,7 +31,6 @@ class Miaopai(Site):
         if len(img_links) > 0:
             img_link = img_links[0]
 
-        print scid
         descs = tree.xpath('//div[@class="introduction"]/p')
         desc = ''
         if len(descs) > 0:

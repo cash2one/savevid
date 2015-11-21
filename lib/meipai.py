@@ -1,12 +1,14 @@
 from lxml import etree
 from StringIO import StringIO
 import requests
+from lib.timeit import timeit
 from lib.site import Site, VideoNotFound
 
 class Meipai(Site):
     def __init__(self):
         pass
 
+    @timeit
     def get_link(self, url):
         r = requests.get(url, timeout=5)
         result = r.text

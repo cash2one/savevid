@@ -1,8 +1,11 @@
+import logging
+import re
+import urlparse
 from django.shortcuts import render
 from django.http import JsonResponse
-import re
 from lib import *
-import urlparse
+
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 def index(request):
@@ -31,7 +34,9 @@ def get_link(request):
     try:
         data = site.get_link(url)
     except:
+        logger.error("cannot get video link for %s" % (url))
         return JsonResponse({"success": False, "msg": "failed to get download link"})
+    logger.debug("got video link for %s" % (url))
     return JsonResponse({"success": True, "msg": "", "result": data})
 
 def aboutus(request):

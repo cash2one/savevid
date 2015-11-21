@@ -4,12 +4,14 @@ import re
 import base64
 import requests
 import urlparse
+from lib.timeit import timeit
 from lib.site import Site, VideoNotFound
 
 class Weipai(Site):
     def __init__(self):
         pass
 
+    @timeit
     def get_link(self, url):
         r = requests.get(url, timeout=5)
         result = r.text

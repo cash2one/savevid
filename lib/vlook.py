@@ -4,12 +4,14 @@ import re
 import requests
 import urlparse
 import urllib
+from lib.timeit import timeit
 from lib.site import Site, VideoNotFound
 
 class Vlook(Site):
     def __init__(self):
         pass
 
+    @timeit
     def get_link(self, url):
         r = requests.get(url, timeout=5)
         result = r.text

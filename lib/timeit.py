@@ -1,4 +1,7 @@
+import logging
 import time
+
+logger = logging.getLogger(__name__)
 
 def timeit(f):
     fname = f.__name__
@@ -7,6 +10,6 @@ def timeit(f):
         result = f(*args, **kwargs)
         end = time.time()
         duration = end - start
-        print "%s takes %f" % (fname, duration)
+        logger.debug("%s takes %f" % (fname, duration))
         return result
     return wrapper
