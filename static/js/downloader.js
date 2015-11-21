@@ -47,6 +47,8 @@ $.ajaxSetup({
 var downloader = {
     init: function() {
         $('#download').click(function(e) {
+            var html_load = '<div class="alert alert-info"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="stat-text"> 正在获取下载链接中...</span></div>';
+            $("#result").html(html_load).fadeIn();
             var url = $('input[name="url"]').val();
             var data = {
                 url: url
@@ -56,20 +58,27 @@ var downloader = {
                 url: '/downloader/get_link/',
                 data: data,
                 success: function(resp) {
-                    var tmpl = ' \
-                    <div class="media dn-link"> \
-                      <div class="media-left media-middle"> \
-                        <a href="{{ vid }}"> \
-                          <img class="media-object vid-img" src="{{ img }}" alt="{{ desc }}"> \
-                        </a> \
-                      </div> \
-                      <div class="media-body"> \
-                        <h4 class="media-heading">{{ desc }}</h4> \
-                        <a class="btn btn-info" href="{{ vid }}" download="{{ vid }}">下载地址</a> \
-                      </div> \
-                    </div>';
-                    var html = Mustache.render(tmpl, resp.result);
-                    $("#result").html(html);
+                    if(resp.success) {
+                        var tmpl = '\
+                        <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><span class="stat-text"> 成功获取下载地址</span></div> \
+                        <div class="media"> \
+                          <div class="media-left media-middle"> \
+                            <a href="{{ vid }}"> \
+                              <img class="media-object vid-img" src="{{ img }}" alt="{{ desc }}"> \
+                            </a> \
+                          </div> \
+                          <div class="media-body"> \
+                            <h4 class="media-heading">{{ desc }}</h4> \
+                            <a class="btn btn-info" href="{{ vid }}" download="{{ vid }}">下载地址</a> \
+                          </div> \
+                        </div>';
+                        var html = Mustache.render(tmpl, resp.result);
+                        $("#result").html(html);
+                    }
+                    else {
+                        var html_err = '<div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span><span class="stat-text"> 获取下载地址失败</span></div>';
+                        $("#result").html(html_err);
+                    }
                 }
             });
         });

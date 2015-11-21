@@ -28,5 +28,8 @@ def get_link(request):
     else:
         return JsonResponse({"success": True, "msg": "video not found"})
 
-    data = site.get_link(url)
+    try:
+        data = site.get_link(url)
+    except:
+        return JsonResponse({"success": False, "msg": "failed to get download link"})
     return JsonResponse({"success": True, "msg": "", "result": data})
