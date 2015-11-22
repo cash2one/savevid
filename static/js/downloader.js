@@ -76,7 +76,8 @@ var downloader = {
                         $("#result").html(html);
                     }
                     else {
-                        var html_err = '<div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span><span class="stat-text"> 获取下载地址失败</span></div>';
+                        var tmpl_err = '<div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span><span class="stat-text"> {{ msg }}</span></div>';
+                        var html_err = Mustache.render(tmpl_err, { msg: resp.msg});
                         $("#result").html(html_err);
                     }
                 }

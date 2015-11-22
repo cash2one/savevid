@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 import logging
 import re
 import urlparse
@@ -29,13 +30,13 @@ def get_link(request):
     elif netloc == "www.vlook.cn":
         site = vlook.Vlook()
     else:
-        return JsonResponse({"success": True, "msg": "video not found"})
+        return JsonResponse({"success": False, "msg": u"目前暂不支持该网站的视频下载: " + netloc})
 
     try:
         data = site.get_link(url)
     except:
         logger.error("cannot get video link for %s" % (url))
-        return JsonResponse({"success": False, "msg": "failed to get download link"})
+        return JsonResponse({"success": False, "msg": u"获取下载地址失败"})
     logger.debug("got video link for %s" % (url))
     return JsonResponse({"success": True, "msg": "", "result": data})
 
