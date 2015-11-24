@@ -30,13 +30,13 @@ def get_link(request):
     elif netloc == "www.vlook.cn":
         site = vlook.Vlook()
     else:
-        return JsonResponse({"success": False, "msg": u"目前暂不支持该网站的视频下载: " + netloc})
+        return JsonResponse({"success": False, "msg": u"暂不支持该网站视频下载哦，我们会尽快添加的"})
 
     try:
         data = site.get_link(url)
     except:
         logger.error("cannot get video link for %s" % (url))
-        return JsonResponse({"success": False, "msg": u"获取下载地址失败"})
+        return JsonResponse({"success": False, "msg": u"获取下载地址失败了:(，我们正在全力查找原因..."})
     logger.debug("got video link for %s" % (url))
     return JsonResponse({"success": True, "msg": "", "result": data})
 
