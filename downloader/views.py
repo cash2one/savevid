@@ -2,8 +2,9 @@
 import logging
 import re
 import urlparse
-from django.shortcuts import render
-from django.http import JsonResponse
+from django.contrib import auth
+from django.shortcuts import render, redirect
+from django.http import JsonResponse, Http404
 from lib import *
 
 logger = logging.getLogger(__name__)
@@ -42,3 +43,32 @@ def get_link(request):
 
 def aboutus(request):
     return render(request, 'aboutus.html')
+
+def login(request):
+    if request.method == "GET":
+        raise Http404("Invalid Request")
+    if request.method == "POST":
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            if not request.POST.get("remember_me", None):
+                request.session.set_expiry(0)
+            auth.login(request, user)
+            return JsonResponse({"success": True, "msg": ""})
+        else:
+            err = "Invalid username or password"
+            return JsonResponse({"success": False, "msg": err})
+
+def userlogin(request):
+    return render(request, "login.html")
+
+def userregister(request):
+    return render(request, "register.html")
+
+def register(request):
+    return render(request, "register.html")
+
+def logout(request):
+    auth.logout(request)
+    return redirect("index")
