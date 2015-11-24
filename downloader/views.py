@@ -13,6 +13,9 @@ logger = logging.getLogger(__name__)
 def index(request):
     return render(request, 'index.html')
 
+def search(request):
+    return render(request, 'search.html')
+
 def get_link(request):
     url = request.POST.get("url", "")
     if url == "":

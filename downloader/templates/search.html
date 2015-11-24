@@ -4,8 +4,8 @@
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="/">下载视频</a></li>
-            <li><a href="/search">搜索视频</a></li>
+            <li><a href="/">下载视频</a></li>
+            <li class="active"><a href="/search">搜索视频</a></li>
         </ul>
     </div>
 </nav>
@@ -22,17 +22,17 @@
                 <input type="text" name="url" class="form-control" placeholder="">
                 <span class="input-group-btn">
                     {% csrf_token %}
-                    <button class="btn btn-default" id="download" type="button">下载</button>
+                    <button class="btn btn-default" id="search" type="button">搜索</button>
                 </span>
             </div>
             <div>
-                <span>输入视频页面链接：如<a target='_blank' href="http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm">http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm</a></span>
+                <span>输入视频关键字：如<b>搞笑</b></span>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2 site-logos">
-            <h4>支持以下网站视频下载</h4>
+            <h4>搜索结果包含以下网站的视频</h4>
             <div class="site-logo">
                 <img border=0 src="/static/img/miaopai.jpg" alt="miaopai-logo">
                 <div class="caption text-center"><p>秒拍</p></div>
@@ -63,3 +63,4 @@
     </div>
 </div>
 {% endblock %}
+
