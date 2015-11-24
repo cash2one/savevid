@@ -47,7 +47,7 @@ $.ajaxSetup({
 var downloader = {
     init: function() {
         $('#download').click(function(e) {
-            var html_load = '<div class="alert alert-info"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="stat-text"> 正在获取下载链接中...</span></div>';
+            var html_load = '<div class="alert alert-info rs-status"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="stat-text"> 正在获取下载链接中...</span></div>';
             $("#result").html(html_load).fadeIn();
             var url = $('input[name="url"]').val();
             var data = {
@@ -60,8 +60,8 @@ var downloader = {
                 success: function(resp) {
                     if(resp.success) {
                         var tmpl = '\
-                        <div class="alert alert-success"><span class="glyphicon glyphicon-ok"></span><span class="stat-text"> 成功获取下载地址</span></div> \
-                        <div class="media"> \
+                        <div class="alert alert-success rs-status"><span class="glyphicon glyphicon-ok"></span><span class="stat-text"> 成功获取下载地址</span></div> \
+                        <div class="media rs-content"> \
                           <div class="media-left media-middle"> \
                             <a href="{{ vid }}"> \
                               <img class="media-object vid-img" src="{{ img }}" alt="{{ desc }}"> \
@@ -76,8 +76,8 @@ var downloader = {
                         $("#result").html(html);
                     }
                     else {
-                        var tmpl_err = '<div class="alert alert-danger"><span class="glyphicon glyphicon-exclamation-sign"></span><span class="stat-text"> {{ msg }}</span></div>';
-                        var html_err = Mustache.render(tmpl_err, { msg: resp.msg});
+                        var tmpl_err = '<div class="alert alert-danger rs-status"><span class="glyphicon glyphicon-exclamation-sign"></span><span class="stat-text"> {{ msg }}</span></div>';
+                        var html_err = Mustache.render(tmpl_err, { msg: resp.msg });
                         $("#result").html(html_err);
                     }
                 }
