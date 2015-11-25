@@ -75,6 +75,9 @@ def search_vid(request):
 def aboutus(request):
     return render(request, 'aboutus.html')
 
+def tutorial(request):
+    return render(request, 'tutorial.html')
+
 def login(request):
     if request.method == "GET":
         raise Http404("Invalid Request")
