@@ -13,7 +13,7 @@ class Weipai(Site):
 
     @timeit
     def get_link(self, url):
-        r = requests.get(url, timeout=5)
+        r = requests.get(url, timeout=10)
         result = r.text
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
@@ -31,7 +31,7 @@ class Weipai(Site):
 
         vid = match.group(1)
         share_link = 'http://share.weipai.cn/video/play/id/%s/type/theater/source/undefine' % (vid)
-        r = requests.get(share_link, timeout=5)
+        r = requests.get(share_link, timeout=10)
         result = r.text
         patt = re.compile(r"'(http.*?)'")
         match_url = patt.search(result)

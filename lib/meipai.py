@@ -10,7 +10,7 @@ class Meipai(Site):
 
     @timeit
     def get_link(self, url):
-        r = requests.get(url, timeout=5)
+        r = requests.get(url, timeout=10)
         result = r.text
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
@@ -32,7 +32,7 @@ class Meipai(Site):
     def search_video(self, keyword, page_num, num_per_page):
         start = (page_num-1) * num_per_page
         url = "http://www.baidu.com/s?q1=%s&q2=&q3=&q4=&lm=0&ft=&q5=&q6=meipai.com&tn=baiduadv&pn=%d&rn=%d" % (keyword, start, num_per_page)
-        r = requests.get(url, timeout=5)
+        r = requests.get(url, timeout=10)
         result = r.text
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
