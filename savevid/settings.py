@@ -158,4 +158,7 @@ LOGGING = {
     }
 }
 
-from local_settings import *
+try:
+    from local_settings import *
+except Exception, e:
+    print str(e)
