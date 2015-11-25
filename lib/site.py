@@ -1,3 +1,4 @@
+#-*- coding:utf-8 -*-
 import re
 from lxml import etree
 from StringIO import StringIO
@@ -18,7 +19,7 @@ def get_inner_html(elem):
         text = ""
 
     for e in elem.getchildren():
-        text = text + etree.tostring(e)
+        text = text + etree.tostring(e, encoding='UTF-8')
     return text
 
 def get_orig_url(url):

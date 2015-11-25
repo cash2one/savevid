@@ -44,6 +44,18 @@ def get_link(request):
     logger.debug("got video link for %s" % (url))
     return JsonResponse({"success": True, "msg": "", "result": data})
 
+def search_vid(request):
+    keyword = request.POST.get("keyword", "")
+    page_num = request.GET.get("pn", 1)
+    page_num = int(page_num)
+    site_classes = [weibo.Weibo, meipai.Meipai, miaopai.Miaopai, weipai.Weipai, vlook.Vlook]
+    results = []
+    for site_class in site_classes:
+        site = site_class()
+        site_results = site.search_video(keyword, page_num, 2)
+        results.extend(site_results)
+    return JsonResponse({"success": True, "msg": "", "result": results})
+
 def aboutus(request):
     return render(request, 'aboutus.html')
 

@@ -62,7 +62,7 @@ var downloader = {
                         var tmpl = '\
                         <div class="alert alert-success rs-status"><span class="glyphicon glyphicon-ok"></span><span class="stat-text"> 成功获取下载地址</span></div> \
                         <div class="media rs-content"> \
-                          <div class="media-left media-middle"> \
+                          <div class="media-left"> \
                             <a href="{{ vid }}"> \
                               <img class="media-object vid-img" src="{{ img }}" alt="{{ desc }}"> \
                             </a> \
@@ -73,6 +73,50 @@ var downloader = {
                           </div> \
                         </div>';
                         var html = Mustache.render(tmpl, resp.result);
+                        $("#result").html(html);
+                    }
+                    else {
+                        var tmpl_err = '<div class="alert alert-danger rs-status"><span class="glyphicon glyphicon-exclamation-sign"></span><span class="stat-text"> {{ msg }}</span></div>';
+                        var html_err = Mustache.render(tmpl_err, { msg: resp.msg });
+                        $("#result").html(html_err);
+                    }
+                }
+            });
+        });
+
+        $('#search').click(function(e) {
+            var html_load = '<div class="alert alert-info rs-status"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="stat-text"> 正在全力搜索资源...</span></div>';
+            $("#result").html(html_load).fadeIn();
+            var keyword = $('input[name="keyword"]').val();
+            var data = {
+                keyword: keyword
+            };
+            $.ajax({
+                type: 'POST',
+                url: '/search_vid/',
+                data: data,
+                success: function(resp) {
+                    if(resp.success) {
+                        var tmpl = '\
+                        {{#results}} \
+                        <div class="media"> \
+                          <div class="srch-item"> \
+                            {{#img}} \
+                            <div class="media-left"> \
+                              <a href="{{ vid }}"> \
+                                <img class="media-object" src="{{ img }}" alt="{{ title }}"> \
+                              </a> \
+                            </div> \
+                            {{/img}} \
+                            <div class="media-body"> \
+                              <h4 class="media-heading"><a href="{{ vid }}">{{ title }}</a></h4> \
+                              <p>{{ desc }}</p> \
+                              <!--<a class="btn btn-info" href="{{ vid }}" download="{{ vid }}">下载地址</a>--> \
+                            </div> \
+                          </div> \
+                        </div> \
+                        {{/results}}';
+                        var html = Mustache.render(tmpl, { results: resp.result});
                         $("#result").html(html);
                     }
                     else {

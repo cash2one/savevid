@@ -74,6 +74,12 @@ div#result .rs-content {
     margin: 4px;
 }
 
+div#result .srch-item {
+    margin: 4px;
+    padding-bottom:4px;
+    border-bottom: 1px dotted #ccc
+}
+
 .glyphicon-refresh-animate {
     -animation: spin .7s infinite linear;
     -webkit-animation: spin2 .7s infinite linear;

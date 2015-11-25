@@ -45,17 +45,23 @@ class Weibo(Site):
         result = r.text
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
-        divs = tree.xpath('//div[@id="content_left"]/div[@id]')
+        divs = tree.xpath('//div[@id="content_left"]/div[@class="result c-container "]')
         results = []
         for div in divs:
             a_node = div.find('.//h3/a')
             title = get_inner_html(a_node)
             vid_link = get_orig_url(a_node.get('href'))
-            img_node = div.find('.//div/a/img')
+            img_node = div.find('.//div/div/a/img')
             img_link = ""
-            if img_node:
+            if img_node is not None:
                 img_link = img_node.get('src')
-            desc = get_inner_html(div.find('.//div/div[@class="c-abstract"]'))
+            descs = div.iterfind('.//div[@class="c-abstract"]')
+            desc = ""
+            try:
+                desc_elem = descs.next()
+                desc = get_inner_html(desc_elem)
+            except:
+                pass
             results.append({"title": title,
                 "vid": vid_link,
                 "img": img_link,
