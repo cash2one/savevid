@@ -47,9 +47,16 @@ $.ajaxSetup({
 var downloader = {
     init: function() {
         $('#download').click(function(e) {
+            // init
+            $('div.msg').empty();
+            var url = $('input[name="url"]').val();
+            if(url == "") {
+                $('div.msg').html('请输入视频链接:');
+                return;
+            }
+
             var html_load = '<div class="alert alert-info rs-status"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="stat-text"> 正在获取下载链接中...</span></div>';
             $("#result").html(html_load).fadeIn();
-            var url = $('input[name="url"]').val();
             var data = {
                 url: url
             };
@@ -85,6 +92,14 @@ var downloader = {
         });
 
         $('#search').click(function(e) {
+            // init
+            $('div.msg').empty();
+            var keyword = $('input[name="keyword"]').val();
+            if(keyword == "") {
+                $('div.msg').html('请输入关键字:');
+                return;
+            }
+
             var html_load = '<div class="alert alert-info rs-status"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="stat-text"> 正在全力搜索视频...</span></div>';
             $("#result").html(html_load).fadeIn();
             var keyword = $('input[name="keyword"]').val();
@@ -129,7 +144,6 @@ var downloader = {
         });
 
         $('input[name="url"]').keydown(function(e){
-            alert("keypress");
             if(e.keyCode == 13){
                 e.preventDefault();
                 $('#download').trigger('click');
