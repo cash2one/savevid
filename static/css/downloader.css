@@ -23,8 +23,16 @@
     font-size: 48px;
 }
 
-.tut {
+.tut-hint {
     margin-top:20px;
+}
+
+.tut img {
+    width:100%;
+}
+
+.tut-step {
+    margin-top:50px;
 }
 
 .msg{

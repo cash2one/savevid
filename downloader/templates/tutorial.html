@@ -4,67 +4,32 @@
 <nav class="navbar navbar-default navbar-static-top">
     <div class="container">
         <ul class="nav navbar-nav">
-            <li class="active"><a href="/">下载视频</a></li>
+            <li><a href="/">下载视频</a></li>
             <li><a href="/search">搜索视频</a></li>
+            <li class="active"><a href="/tutorial">下载教程</a></li>
         </ul>
     </div>
 </nav>
 <div class="container">
-    <div class="row brand">
-        <div class="col-md-8 col-md-offset-2">
-            <h1 class="text-center">爱当录</h1>
-            <p class="text-center text-muted scd-text">让下载视频像看视频一样简单</p>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="text-danger msg">
-            </div>
-            <div class="input-group">
-                <input type="text" name="url" class="form-control" placeholder="">
-                <span class="input-group-btn">
-                    {% csrf_token %}
-                    <button class="btn btn-default" id="download" type="button">下载</button>
-                </span>
-            </div>
-            <div>
-                <span>输入视频页面链接：如<a target="_blank" href="http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm">http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm</a></span>
-            </div>
+            <h1 class="text-center">爱当录</h1>
         </div>
     </div>
     <div class="row tut">
         <div class="col-md-8 col-md-offset-2">
-            <span class="text-warning">不会下载？点击查看<a target="_blank" href="/tutorial/">下载教程</a></span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2 site-logos">
-            <h4>支持以下网站视频下载</h4>
-            <div class="site-logo">
-                <img border=0 src="/static/img/miaopai.jpg" alt="miaopai-logo">
-                <div class="caption text-center"><p>秒拍</p></div>
+            <p>这里以微录客为例，其他网站下载方法类似。</p>
+            <div class="tut-step">
+                <h4>第1步：打开视频网页，复制浏览器中的视频链接（如下图红圈中所示）</h4>
+                <img src="/static/img/tut1.jpg" alt="tut1"></a>
             </div>
-            <div class="site-logo">
-                <img border=0 src="/static/img/meipai.jpg" alt="meipai-logo">
-                <div class="caption text-center"><p>美拍</p></div>
+            <div class="tut-step">
+                <h4>第2步：粘贴链接到输入框，点击“下载”</h4>
+                <img src="/static/img/tut2.jpg" alt="tut2"></a>
             </div>
-            <div class="site-logo">
-                <img border=0 src="/static/img/vlook.jpg" alt="vlook-logo">
-                <div class="caption text-center"><p>微录客</p></div>
-            </div>
-            <div class="site-logo">
-                <img border=0 src="/static/img/weibo.jpg" alt="weibo-logo">
-                <div class="caption text-center"><p>微博视频</p></div>
-            </div>
-            <div class="site-logo">
-                <img border=0 src="/static/img/weipai.jpg" alt="weipai-logo">
-                <div class="caption text-center"><p>微拍</p></div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div id="result">
+            <div class="tut-step">
+                <h4>第3步：出现下载地址后，鼠标移到“下载地址”按钮上方，右键选择“目标另存为”保存文件</h4>
+                <img src="/static/img/tut3.jpg" alt="tut3"></a>
             </div>
         </div>
     </div>
