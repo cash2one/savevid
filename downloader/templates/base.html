@@ -4,9 +4,9 @@
         <title>{% block title %}{% endblock %}</title>
         <meta name="description" content="爱当录支持各类视频网站的视频下载，让你轻轻松松下载视频，让下载视频像看视频一样简单" />
         <meta name="keywords" content="视频下载,秒拍视频下载,微拍视频下载,微录客视频下载,微博视频下载,微视视频下载" />
-        <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
         {% load compress %}
         {% compress css %}
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
         <link rel="stylesheet" href="/static/css/downloader.css" type="text/css">
         {% endcompress %}
     </head>
@@ -20,11 +20,11 @@
                 </div>
             </div>
         </div>
+        {% load compress %}
+        {% compress js %}
         <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
         <script src="/static/js/mustache.min.js"></script>
-        {% load compress %}
-        {% compress js %}
         <script src="/static/js/downloader.js"></script>
         <script>
             $(document).ready(function() {
