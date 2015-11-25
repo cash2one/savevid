@@ -56,7 +56,8 @@ class Miaopai(Site):
             img_link = ""
             if img_node:
                 img_link = img_node.get('src')
-            desc = get_inner_html(div.find('.//div/div[@class="c-abstract"]'))
+
+            desc = get_inner_html(div.find('.//div[@class="c-abstract"]'))
             results.append({"title": title,
                 "vid": vid_link,
                 "img": img_link,

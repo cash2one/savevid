@@ -70,7 +70,7 @@ class Weipai(Site):
             a_node = div.find('.//h3/a')
             title = get_inner_html(a_node)
             vid_link = get_orig_url(a_node.get('href'))
-            img_node = div.find('.//div/div/a/img')
+            img_node = div.find('.//div/a/img')
             img_link = ""
             if img_node:
                 img_link = img_node.get('src')

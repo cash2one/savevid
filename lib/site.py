@@ -1,19 +1,36 @@
+import re
 from lxml import etree
+from StringIO import StringIO
 import requests
 
 class VideoNotFound(Exception):
     pass
 class NoSearchResults(Exception):
     pass
+class OrigUrlNotFound(Exception):
+    pass
 class NotImplemented(Exception):
     pass
 
 def get_inner_html(elem):
-    return "".join([ etree.tostring(e) for e in elem.getchildren() ])
+    text = elem.text
+    if text is None:
+        text = ""
+
+    for e in elem.getchildren():
+        text = text + etree.tostring(e)
+    return text
 
 def get_orig_url(url):
-    r = requests.head(url, timeout=5)
-    return r.headers["Location"]
+    r = requests.get(url, timeout=5)
+    if "Location" in r.headers:
+        return r.headers["Location"]
+    result = r.text
+    patt = re.compile(r'window.location.replace\("(.*)"')
+    match = patt.search(result)
+    if match:
+        return match.group(1)
+    raise OrigUrlNotFound(url)
 
 class Site:
     def __init__(self):

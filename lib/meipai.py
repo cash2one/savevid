@@ -32,6 +32,7 @@ class Meipai(Site):
     def search_video(self, keyword, page_num, num_per_page):
         start = (page_num-1) * num_per_page
         url = "http://www.baidu.com/s?q1=%s&q2=&q3=&q4=&lm=0&ft=&q5=&q6=meipai.com&tn=baiduadv&pn=%d&rn=%d" % (keyword, start, num_per_page)
+        print url
         r = requests.get(url, timeout=5)
         result = r.text
         parser = etree.HTMLParser()
@@ -44,9 +45,9 @@ class Meipai(Site):
             vid_link = get_orig_url(a_node.get('href'))
             img_node = div.find('.//div/div/a/img')
             img_link = ""
-            if img_node:
+            if img_node is not None:
                 img_link = img_node.get('src')
-            desc = get_inner_html(div.find('.//div/div[@class="c-abstract"]'))
+            desc = get_inner_html(div.find('.//div[@class="c-abstract"]'))
             results.append({"title": title,
                 "vid": vid_link,
                 "img": img_link,
