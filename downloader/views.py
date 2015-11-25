@@ -36,7 +36,7 @@ def get_link(request):
     elif netloc == "www.vlook.cn":
         site = vlook.Vlook()
     else:
-        return JsonResponse({"success": False, "msg": u"暂不支持该网站视频下载哦，我们会尽快添加的"})
+        return JsonResponse({"success": False, "msg": u"暂不支持该网站视频下载，我们会尽快添加"})
 
     try:
         data = site.get_link(url)
@@ -68,6 +68,8 @@ def search_vid(request):
         thr.start()
     q.join()
     results = filter(lambda x: x["img"], results)
+    if len(results) == 0:
+        return JsonResponse({"success": False, "msg": u"没有找到视频:("})
     return JsonResponse({"success": True, "msg": "", "result": results})
 
 def aboutus(request):

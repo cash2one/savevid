@@ -85,7 +85,7 @@ var downloader = {
         });
 
         $('#search').click(function(e) {
-            var html_load = '<div class="alert alert-info rs-status"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="stat-text"> 正在全力搜索资源...</span></div>';
+            var html_load = '<div class="alert alert-info rs-status"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><span class="stat-text"> 正在全力搜索视频...</span></div>';
             $("#result").html(html_load).fadeIn();
             var keyword = $('input[name="keyword"]').val();
             var data = {
@@ -126,6 +126,21 @@ var downloader = {
                     }
                 }
             });
+        });
+
+        $('input[name="url"]').keydown(function(e){
+            alert("keypress");
+            if(e.keyCode == 13){
+                e.preventDefault();
+                $('#download').trigger('click');
+            }
+        });
+
+        $('input[name="keyword"]').keydown(function(e){
+            if(e.keyCode == 13){
+                e.preventDefault();
+                $('#search').trigger('click');
+            }
         });
     }
 };
