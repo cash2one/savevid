@@ -19,7 +19,10 @@ def get_inner_html(elem):
         text = ""
 
     for e in elem.getchildren():
-        text = text + etree.tostring(e, encoding='UTF-8')
+        text = text + get_inner_html(e)
+
+    if elem.tail is not None:
+        text = text + elem.tail
     return text
 
 def get_orig_url(url):

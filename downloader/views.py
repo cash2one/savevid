@@ -2,6 +2,8 @@
 import logging
 import re
 import urlparse
+import Queue
+import threading
 from django.contrib import auth
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, Http404
@@ -45,15 +47,27 @@ def get_link(request):
     return JsonResponse({"success": True, "msg": "", "result": data})
 
 def search_vid(request):
+    def worker(q, keyword, page_num, results):
+        while not q.empty():
+            site_class = q.get()
+            site = site_class()
+            site_results = site.search_video(keyword, page_num, 10)
+            results.extend(site_results)
+            q.task_done()
+
     keyword = request.POST.get("keyword", "")
     page_num = request.GET.get("pn", 1)
     page_num = int(page_num)
     site_classes = [weibo.Weibo, meipai.Meipai, miaopai.Miaopai, weipai.Weipai, vlook.Vlook]
     results = []
+    q = Queue.Queue()
     for site_class in site_classes:
-        site = site_class()
-        site_results = site.search_video(keyword, page_num, 2)
-        results.extend(site_results)
+        q.put(site_class)
+        thr = threading.Thread(target=worker, args=(q, keyword, page_num, results))
+        thr.setDaemon(True)
+        thr.start()
+    q.join()
+    results = filter(lambda x: x["img"], results)
     return JsonResponse({"success": True, "msg": "", "result": results})
 
 def aboutus(request):
@@ -87,3 +101,4 @@ def register(request):
 def logout(request):
     auth.logout(request)
     return redirect("index")
+
