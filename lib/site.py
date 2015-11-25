@@ -26,9 +26,10 @@ def get_inner_html(elem):
     return text
 
 def get_orig_url(url):
-    r = requests.get(url, timeout=5)
+    r = requests.head(url, timeout=10)
     if "Location" in r.headers:
         return r.headers["Location"]
+    r = requests.get(url, timeout=10)
     result = r.text
     patt = re.compile(r'window.location.replace\("(.*)"')
     match = patt.search(result)
@@ -43,3 +44,5 @@ class Site:
     def get_link(self, url):
         raise NotImplemented()
 
+if __name__ == "__main__":
+    get_orig_url("http://service.vlook.cn:8080/down/servlet/VideoPlay?vid=cANr&client=pc&imei=f8e36ddffcb7fca735ed7bfeeb1345fb")

@@ -1,11 +1,14 @@
 from lxml import etree
 from StringIO import StringIO
+import logging
 import re
 import requests
 import urlparse
 import urllib
 from lib.timeit import timeit
 from lib.site import Site, VideoNotFound, get_inner_html, get_orig_url
+
+logger = logging.getLogger(__name__)
 
 class Vlook(Site):
     def __init__(self):
@@ -21,6 +24,7 @@ class Vlook(Site):
             raise VideoNotFound(url)
 
         src = urllib.unquote(match.group(1))
+        print src
         vid_link = get_orig_url(src)
 
         patt = re.compile(r'player_poster=([^&]*)&')
