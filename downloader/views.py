@@ -41,8 +41,8 @@ def get_link(request):
     try:
         data = site.get_link(url)
     except:
-        logger.error("cannot get video link for %s" % (url))
-        return JsonResponse({"success": False, "msg": u"获取下载地址失败了:(，我们正在全力查找原因..."})
+        logger.error("failed to get video link for %s" % (url))
+        return JsonResponse({"success": False, "msg": u"获取下载地址失败了:(，我们正在查找原因..."})
     logger.debug("got video link for %s" % (url))
     return JsonResponse({"success": True, "msg": "", "result": data})
 
