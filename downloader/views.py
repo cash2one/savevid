@@ -22,6 +22,7 @@ def get_link(request):
     url = request.POST.get("url", "")
     if url == "":
         return JsonResponse({"success": True, "msg": "empty url"})
+    url = url.strip()
     parsed = urlparse.urlsplit(url)
     netloc = parsed.netloc
     site = None
@@ -56,6 +57,7 @@ def search_vid(request):
             q.task_done()
 
     keyword = request.POST.get("keyword", "")
+    keyword = keyword.strip()
     page_num = request.GET.get("pn", 1)
     page_num = int(page_num)
     site_classes = [weibo.Weibo, meipai.Meipai, miaopai.Miaopai, weipai.Weipai, vlook.Vlook]
