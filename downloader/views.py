@@ -23,25 +23,14 @@ def get_link(request):
     if url == "":
         return JsonResponse({"success": True, "msg": "empty url"})
     url = url.strip()
-    parsed = urlparse.urlsplit(url)
-    netloc = parsed.netloc
-    site = None
-    if netloc == "video.weibo.com":
-        site = weibo.Weibo()
-    elif netloc == "www.meipai.com":
-        site = meipai.Meipai()
-    elif netloc == "www.miaopai.com":
-        site = miaopai.Miaopai()
-    elif netloc == "www.weipai.cn":
-        site = weipai.Weipai()
-    elif netloc == "www.vlook.cn":
-        site = vlook.Vlook()
-    else:
-        return JsonResponse({"success": False, "msg": u"暂不支持该网站视频下载，我们会尽快添加"})
-
     try:
-        data = site.get_link(url)
-    except:
+        factory = site_factory.SiteFactory(url)
+        data = factory.get_link()
+    except site_factory.SiteNotSupported, e:
+        logger.error("site not supported: %s" % (url))
+        return JsonResponse({"success": False, "msg": u"暂不支持该网站视频下载，我们会尽快添加"})
+    except Exception, e:
+        print str(e)
         logger.error("failed to get video link for %s" % (url))
         return JsonResponse({"success": False, "msg": u"获取下载地址失败了:(，我们正在查找原因..."})
     logger.debug("got video link for %s" % (url))
