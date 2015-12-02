@@ -120,29 +120,35 @@ div.footer {
     margin-top:100px;
     border-top:1px solid #e7e7e7;
     /*font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;*/
-    font-size:12px
+    font-size:12px;
+    padding:10px;
 }
 
-div.links{
+.footer div.links{
     clear:both;
     margin-top:10px;
     margin-left:auto;
     margin-right:auto;
-    padding-left:10px;
-    padding-right:10px;
     width:180px;
 }
 
-div.links>.link{
+.footer div.links>.link{
     display:inline;
     margin-left:30px
 }
 
-div.links>.first{
+.footer div.link:first-child{
     margin-left:0
 }
 
-div.link>a{
+.footer div.link>a{
     color:#999;
     text-decoration:none
+}
+
+.friends {
+}
+
+.friends>.link{
+    display:inline;
 }
