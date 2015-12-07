@@ -32,7 +32,7 @@ def get_link(request):
     except Exception, e:
         print str(e)
         logger.error("failed to get video link for %s" % (url))
-        return JsonResponse({"success": False, "msg": u"获取下载地址失败了:(，我们正在查找原因..."})
+        return JsonResponse({"success": False, "msg": u"找不到下载地址，视频可能已被删除"})
     logger.debug("got video link for %s" % (url))
     return JsonResponse({"success": True, "msg": "", "result": data})
 
