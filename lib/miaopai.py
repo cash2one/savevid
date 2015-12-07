@@ -18,7 +18,8 @@ class Miaopai(Site):
         links = tree.xpath('//param[@name="src"]/@value')
 
         if len(links) == 0:
-            raise VideoNotFound(url)
+            return self.__search_mp4(tree)
+
         link = links[0]
         patt = re.compile(r"\?scid=(.*?)&")
         match = patt.search(link)
@@ -69,7 +70,22 @@ class Miaopai(Site):
                 "desc": desc})
         return results
 
+    def __search_mp4(self, tree):
+        divs = tree.xpath('//div[@class="vid_img"]')
+        if len(divs) == 0:
+            raise VideoNotFound()
+
+        vid_link = divs[0].get('data-url')
+        img_links = divs[0].find('.//img')
+        img_link = ""
+        try:
+            img_link = img_links.get('src')
+        except:
+            pass
+        return {"vid": vid_link, "img": img_link, "desc": ""}
+
 if __name__ == "__main__":
     miaopai = Miaopai()
     print miaopai.get_link('http://www.miaopai.com/show/fEhYvm~vakOc22cw~n8rJg__.htm')
     print miaopai.search_video('hello', 1, 2)
+    print miaopai.get_link('http://m.miaopai.com/v2_index/topic/WREKRDEoIMBjKczu')
