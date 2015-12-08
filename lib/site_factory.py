@@ -1,6 +1,6 @@
 import re
 import urlparse
-import miaopai, weipai, meipai, weibo, vlook
+import miaopai, weipai, meipai, weibo, vlook, weipainv
 class SiteNotSupported(Exception):
     pass
 
@@ -20,6 +20,8 @@ class SiteFactory:
             self.site = weipai.Weipai()
         elif re.search(r"vlook.cn", netloc):
             self.site = vlook.Vlook()
+        elif re.search(r"weipainv.com", netloc):
+            self.site = weipainv.Weipainv()
         else:
             raise SiteNotSupported()
 
