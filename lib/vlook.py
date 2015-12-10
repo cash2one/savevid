@@ -24,7 +24,6 @@ class Vlook(Site):
             raise VideoNotFound(url)
 
         src = urllib.unquote(match.group(1))
-        print src
         vid_link = get_orig_url(src)
 
         patt = re.compile(r'player_poster=([^&]*)&')
