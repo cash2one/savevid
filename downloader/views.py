@@ -24,7 +24,7 @@ def get_link(request):
         return JsonResponse({"success": True, "msg": "empty url"})
     url = url.strip()
     try:
-        factory = site_factory.SiteFactory(url)
+        factory = site_factory.SiteFactory(url=url)
         data = factory.get_link()
     except site_factory.SiteNotSupported, e:
         logger.error("site not supported: %s" % (url))
@@ -40,7 +40,7 @@ def search_vid(request):
     def worker(q, keyword, page_num, results):
         while not q.empty():
             site_class = q.get()
-            site = site_class()
+            site = site_factory.SiteFactory(name=site_class)
             site_results = site.search_video(keyword, page_num, 10)
             results.extend(site_results)
             q.task_done()
@@ -49,7 +49,7 @@ def search_vid(request):
     keyword = keyword.strip()
     page_num = request.GET.get("pn", 1)
     page_num = int(page_num)
-    site_classes = [weibo.Weibo, meipai.Meipai, miaopai.Miaopai, weipai.Weipai, vlook.Vlook]
+    site_classes = ["weibo", "miaopai", "weipai", "meipai", "vlook", "weipainv"]
     results = []
     q = Queue.Queue()
     for site_class in site_classes:
@@ -59,6 +59,7 @@ def search_vid(request):
         thr.start()
     q.join()
     results = filter(lambda x: x["img"], results)
+    logger.debug("search %s returned %d results", keyword, len(results))
     if len(results) == 0:
         return JsonResponse({"success": False, "msg": u"没有找到视频:("})
     return JsonResponse({"success": True, "msg": "", "result": results})
