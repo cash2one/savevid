@@ -14,7 +14,7 @@ class Weipainv(Site):
         r = requests.get(url, timeout=10)
         result = r.text
         #print result.encode("utf-8")
-        patt = re.compile(r'jwplayer\("video"\).setup\(\{(.*?)\}\)', re.M|re.S)
+        patt = re.compile(r'jwplayer\(".*"\).setup\(\{(.*?)\}\)', re.M|re.S)
         match = patt.search(result)
         if not match:
             raise VideoNotFound()
