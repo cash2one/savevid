@@ -14,7 +14,6 @@ class Xiaoying(Site):
     @timeit
     def get_link(self, url):
         parsed = urlparse.urlsplit(url)
-        url_parts = parsed.path.split("/")
         patt = re.compile(r"/v/([^/]*)/")
         match = patt.search(parsed.path)
         if not match:
