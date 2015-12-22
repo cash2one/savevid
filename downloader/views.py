@@ -49,7 +49,9 @@ def search_vid(request):
     keyword = keyword.strip()
     page_num = request.GET.get("pn", 1)
     page_num = int(page_num)
-    site_classes = ["weibo", "miaopai", "weipai", "meipai", "vlook", "weipainv"]
+    site_classes = ["weibo", "miaopai", "weipai", "meipai",
+        "vlook", "weipainv", "xiaoying", "xiaokaxiu",
+        "gifshow", "v1"]
     results = []
     q = Queue.Queue()
     for site_class in site_classes:

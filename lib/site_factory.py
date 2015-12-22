@@ -1,6 +1,16 @@
 import re
 import urlparse
-import miaopai, weipai, meipai, weibo, vlook, weipainv, xiaoying, xiaokaxiu, v1
+import miaopai
+import weipai
+import meipai
+import weibo
+import vlook
+import weipainv
+import xiaoying
+import xiaokaxiu
+import gifshow
+import v1
+
 class SiteNotSupported(Exception):
     pass
 
@@ -11,7 +21,9 @@ site_class = {"weibo": weibo.Weibo,
     "vlook": vlook.Vlook,
     "weipainv": weipainv.Weipainv,
     "xiaoying": xiaoying.Xiaoying,
-    "xiaokaxiu": xiaokaxiu.Xiaokaxiu}
+    "xiaokaxiu": xiaokaxiu.Xiaokaxiu,
+    "gifshow": gifshow.Gifshow,
+    "v1": v1.V1}
 
 class SiteFactory:
     def __init__(self, name=None, url=None):
@@ -42,6 +54,8 @@ class SiteFactory:
                 self.site = xiaoying.Xiaoying()
             elif re.search(r"xiaokaxiu.com", netloc):
                 self.site = xiaokaxiu.Xiaokaxiu()
+            elif re.search(r"gifshow.com|kuaishou.com", netloc):
+                self.site = gifshow.Gifshow()
             elif re.search(r"v1.cn", netloc):
                 self.site = v1.V1()
             else:
