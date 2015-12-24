@@ -107,7 +107,7 @@ var downloader = {
                 keyword: keyword
             };
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: '/search_vid/',
                 data: data,
                 success: function(resp) {

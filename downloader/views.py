@@ -45,7 +45,7 @@ def search_vid(request):
             results.extend(site_results)
             q.task_done()
 
-    keyword = request.POST.get("keyword", "")
+    keyword = request.GET.get("keyword", "")
     keyword = keyword.strip()
     page_num = request.GET.get("pn", 1)
     page_num = int(page_num)
