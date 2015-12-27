@@ -18,12 +18,13 @@ class Aishipin(Site):
         links = tree.xpath('//div[@id="post_content"]')
         if len(links) == 0:
             raise VideoNotFound(url)
+
         vid_node = links[0]
         html = etree.tostring(vid_node)
         patt = re.compile(r"setCuSunPlayerVideo\((.*)\)")
         match = patt.search(html)
         if not match:
-            raise VideoNotFound()
+            return self.get_sinaimg_video(tree)
 
         params = match.group(1).split(",")
         img_path = params[2]
@@ -33,6 +34,16 @@ class Aishipin(Site):
         vid_link = vid_link[1:len(vid_link)-1]
         p_nodes = vid_node.findall('.//p[@style]')
         desc = get_inner_html(p_nodes[1])
+        return {"vid": vid_link, "img": img_link, "desc": desc}
+
+    def get_sinaimg_video(self, tree):
+        links = tree.xpath('//source[@src]')
+        if len(links) == 0:
+            raise VideoNotFound(url)
+
+        vid_link = links[0].get("src")
+        img_link = ""
+        desc = ""
         return {"vid": vid_link, "img": img_link, "desc": desc}
 
     @timeit
@@ -72,5 +83,6 @@ class Aishipin(Site):
 if __name__ == "__main__":
     site = Aishipin()
     print site.get_link('http://www.aishipin.net/wpfuli/784.html')
+    print site.get_link('http://www.aishipin.net/wpfuli/737.html')
     print site.search_video('hello', 1, 2)
 
