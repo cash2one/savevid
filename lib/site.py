@@ -45,4 +45,5 @@ class Site:
         raise NotImplemented()
 
 if __name__ == "__main__":
-    get_orig_url("http://service.vlook.cn:8080/down/servlet/VideoPlay?vid=cANr&client=pc&imei=f8e36ddffcb7fca735ed7bfeeb1345fb")
+    print get_orig_url("http://service.vlook.cn:8080/down/servlet/VideoPlay?vid=cANr&client=pc&imei=f8e36ddffcb7fca735ed7bfeeb1345fb")
+    print get_orig_url("http://www.baidu.com")

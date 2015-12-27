@@ -13,28 +13,38 @@ class Weibo(Site):
 
     @timeit
     def get_link(self, url):
-        r = requests.get(url, timeout=10)
-        result = r.text
-        parser = etree.HTMLParser()
-        tree = etree.parse(StringIO(result), parser)
-        links = tree.xpath('//embed/@flashvars')
+        parsed = urlparse.urlsplit(url)
+        netloc = parsed.netloc
+        sinaimg_url = ""
+        img_link = ""
+        if re.search(r"weibo.com|weibo.cn", netloc):
+            r = requests.get(url, timeout=10)
+            result = r.text
+            parser = etree.HTMLParser()
+            tree = etree.parse(StringIO(result), parser)
+            links = tree.xpath('//embed/@flashvars')
 
-        if len(links) == 0:
-            raise VideoNotFound()
+            if len(links) == 0:
+                raise VideoNotFound()
 
-        flashvars = links[0]
-        patt = re.compile(r'list=(.*)')
-        match = patt.search(flashvars)
-        if not match:
-            raise VideoNotFound()
-        link = urllib.unquote(match.group(1))
-        path = self.__extract_mp4(link)
-        netloc = urlparse.urlsplit(link).netloc
+            flashvars = links[0]
+            patt = re.compile(r'list=(.*)')
+            match = patt.search(flashvars)
+            if not match:
+                raise VideoNotFound()
+            sinaimg_url = urllib.unquote(match.group(1))
+            img_links = tree.xpath('//img/@src')
+            if len(img_links) > 0:
+                img_link = img_links[0]
+        elif re.search(r"sinajs.cn", netloc):
+            patt = re.compile(r"file=(.*)")
+            match = patt.search(url)
+            sinaimg_url = urllib.unquote(match.group(1))
+        elif re.search(r"sinaimg.cn", netloc):
+            sinaimg_url = url
+        path = self.extract_mp4(sinaimg_url)
+        netloc = urlparse.urlsplit(sinaimg_url).netloc
         vid_link = "http://%s/%s" % (netloc, path)
-        img_links = tree.xpath('//img/@src')
-        img_link = ''
-        if len(img_links) > 0:
-            img_link = img_links[0]
         return {"vid": vid_link, "img": img_link, "desc": ""}
 
     @timeit
@@ -71,7 +81,7 @@ class Weibo(Site):
                 "desc": desc})
         return results
 
-    def __extract_mp4(self, url):
+    def extract_mp4(self, url):
         r = requests.get(url, timeout=5)
         result = r.text
         lines = result.split("\n")
@@ -83,7 +93,9 @@ class Weibo(Site):
         return lines[0]
 
 if __name__ == "__main__":
-    weibo = Weibo()
+    site = Weibo()
 #    print weibo.get_link('http://video.weibo.com/player/1034:172d8e9a6a92e9d530f730e8a3dc1587/v.swf')
-    print weibo.get_link('http://video.weibo.com/show?fid=1034:fbc31906b81fc46b1408757ea8d5c8d2')
-    print weibo.search_video('hello', 1, 2)
+    print site.get_link('http://video.weibo.com/show?fid=1034:fbc31906b81fc46b1408757ea8d5c8d2')
+    print site.get_link('http://js.t.sinajs.cn/t5/album/static/swf/video/player.swf?_v91d241481359274b&file=http%3A%2F%2Fus.sinaimg.cn%2F000bU62Ijx06WgLkPQgT0104010000220k01.m3u8%3FKID%3Dunistore%2Cvideo%26Expires%3D1449109821%26ssig%3D7kz%252BG%252Fi0UB&logo=1&fid=1034:0bf43107c35630a93cc4ed07c190724e&monitor=')
+    print site.get_link('http://us.sinaimg.cn/003v1TAnjx06TPIQVICr010d010000cp0k01.m3u8?KID=unistore,video&Expires=1448973602&ssig=LQTIsbKcc2')
+    print site.search_video('hello', 1, 2)

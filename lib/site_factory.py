@@ -1,5 +1,6 @@
 import re
 import urlparse
+import lib.site
 import miaopai
 import weipai
 import meipai
@@ -39,11 +40,14 @@ class SiteFactory:
             site = site_class[name]
             self.site = site()
         else:
-            self.url = url
-            parsed = urlparse.urlsplit(url)
+            try:
+                self.url = lib.site.get_orig_url(url)
+            except:
+                self.url = url
+            parsed = urlparse.urlsplit(self.url)
             netloc = parsed.netloc
             self.site = None
-            if re.search(r"weibo.com|weibo.cn", netloc):
+            if re.search(r"weibo.com|weibo.cn|sinajs.cn|sinaimg.cn", netloc):
                 self.site = weibo.Weibo()
             elif re.search(r"meipai.com", netloc):
                 self.site = meipai.Meipai()
