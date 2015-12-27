@@ -11,7 +11,7 @@ class Aishipin(Site):
 
     @timeit
     def get_link(self, url):
-        r = requests.get(url, timeout=10)
+        r = requests.get(url, timeout=20)
         result = r.text
         parser = etree.HTMLParser()
         tree = etree.parse(StringIO(result), parser)
