@@ -51,7 +51,7 @@ class SiteFactory:
                 self.site = weibo.Weibo()
             elif re.search(r"meipai.com", netloc):
                 self.site = meipai.Meipai()
-            elif re.search(r"miaopai.com", netloc):
+            elif re.search(r"miaopai.com|ent.v.sina.cn", netloc):
                 self.site = miaopai.Miaopai()
             elif re.search(r"weipai.cn", netloc):
                 self.site = weipai.Weipai()

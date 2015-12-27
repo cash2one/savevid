@@ -28,11 +28,11 @@ def get_link(request):
         data = factory.get_link()
     except site_factory.SiteNotSupported, e:
         logger.error("site not supported: %s" % (url))
-        return JsonResponse({"success": False, "msg": u"暂不支持该网站视频下载，但已记录下该网站，一般会在一周内添加支持该网站，可过几天再试哦"})
+        return JsonResponse({"success": False, "msg": u"暂不支持该网站视频下载，但已记录下该网站，一般会在一周内添加支持该网站，可过几天再试哦。如有疑问，可联系aidanglu@sina.com。"})
     except Exception, e:
         print str(e)
         logger.error("failed to get video link for %s" % (url))
-        return JsonResponse({"success": False, "msg": u"找不到下载地址，视频可能已被删除"})
+        return JsonResponse({"success": False, "msg": u"找不到下载地址，视频可能已被删除。如有疑问，可联系aidanglu@sina.com。"})
     logger.debug("got video link for %s" % (url))
     return JsonResponse({"success": True, "msg": "", "result": data})
 
