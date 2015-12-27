@@ -33,6 +33,58 @@ function sameOrigin(url) {
         // or any other URL that isn't scheme relative or absolute i.e relative.
         !(/^(\/\/|http:|https:).*/.test(url));
 }
+
+function loadmore(obj) {
+    var pager_html = '<li class="text-primary">加载中<img style="width:50px;" src="/static/img/loading.gif"></img></li>';
+    $('ul.pager').html(pager_html);
+    $obj = $(obj);
+    keyword = $obj.attr("keyword");
+    page_num = $obj.attr("page_num");
+    var data = {
+        keyword: keyword,
+        page_num: page_num
+    };
+
+    $.ajax({
+        type: 'GET',
+        url: '/search_vid/',
+        data: data,
+        success: function(resp) {
+            if(resp.success) {
+                var tmpl = '\
+                {{#results}} \
+                  <div class="media"> \
+                    <div class="srch-item"> \
+                      {{#img}} \
+                      <div class="media-left"> \
+                        <a href="{{ vid }}"> \
+                          <img class="media-object" src="{{ img }}" alt="{{ title }}"> \
+                        </a> \
+                      </div> \
+                      {{/img}} \
+                      <div class="media-body"> \
+                        <h4 class="media-heading"><a href="{{ vid }}">{{ title }}</a></h4> \
+                        <p>{{ desc }}</p> \
+                        <!--<a class="btn btn-info" href="{{ vid }}" download="{{ vid }}">下载地址</a>--> \
+                      </div> \
+                    </div> \
+                  </div> \
+                {{/results}}';
+                var html = $('#result-items').html() + Mustache.render(tmpl, { results: resp.result});
+                $("#result-items").html(html);
+                var pager_tmpl = '<li><a class="more" keyword="{{ keyword }}" page_num="{{ page_num }}" onclick="javascript:loadmore(this);">更多搜索结果</a></li>';
+                pager_html = Mustache.render(pager_tmpl, {keyword: resp.keyword, page_num: resp.next});
+                $("ul.pager").html(pager_html);
+            }
+            else {
+                var pager_tmpl = '<li class="text-danger">没有更多结果了<li>';
+                pager_html = Mustache.render(pager_tmpl, {keyword: resp.keyword, page_num: resp.next});
+                $("ul.pager").html(pager_html);
+            }
+        }
+    });
+}
+
 $.ajaxSetup({
     beforeSend: function(xhr, settings) {
         if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
@@ -104,7 +156,8 @@ var downloader = {
             $("#result").html(html_load).fadeIn();
             var keyword = $('input[name="keyword"]').val();
             var data = {
-                keyword: keyword
+                keyword: keyword,
+                page_num: 1
             };
             $.ajax({
                 type: 'GET',
@@ -113,25 +166,34 @@ var downloader = {
                 success: function(resp) {
                     if(resp.success) {
                         var tmpl = '\
+                        <div id="result-items"> \
                         {{#results}} \
-                        <div class="media"> \
-                          <div class="srch-item"> \
-                            {{#img}} \
-                            <div class="media-left"> \
-                              <a href="{{ vid }}"> \
-                                <img class="media-object" src="{{ img }}" alt="{{ title }}"> \
-                              </a> \
-                            </div> \
-                            {{/img}} \
-                            <div class="media-body"> \
-                              <h4 class="media-heading"><a href="{{ vid }}">{{ title }}</a></h4> \
-                              <p>{{ desc }}</p> \
-                              <!--<a class="btn btn-info" href="{{ vid }}" download="{{ vid }}">下载地址</a>--> \
+                          <div class="media"> \
+                            <div class="srch-item"> \
+                              {{#img}} \
+                              <div class="media-left"> \
+                                <a href="{{ vid }}"> \
+                                  <img class="media-object" src="{{ img }}" alt="{{ title }}"> \
+                                </a> \
+                              </div> \
+                              {{/img}} \
+                              <div class="media-body"> \
+                                <h4 class="media-heading"><a href="{{ vid }}">{{ title }}</a></h4> \
+                                <p>{{ desc }}</p> \
+                                <!--<a class="btn btn-info" href="{{ vid }}" download="{{ vid }}">下载地址</a>--> \
+                              </div> \
                             </div> \
                           </div> \
-                        </div> \
-                        {{/results}}';
+                        {{/results}} \
+                        </div>';
                         var html = Mustache.render(tmpl, { results: resp.result});
+                        var pager_tmpl = '<nav> \
+                          <ul class="pager"> \
+                            <li><a class="more" keyword="{{ keyword }}" page_num="{{ page_num }}" onclick="javascript:loadmore(this);">更多搜索结果</a></li> \
+                          </ul> \
+                        </nav>';
+                        var pager_html = Mustache.render(pager_tmpl, {keyword: resp.keyword, page_num: resp.next});
+                        html += pager_html;
                         $("#result").html(html);
                     }
                     else {

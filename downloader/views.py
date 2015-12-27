@@ -47,7 +47,7 @@ def search_vid(request):
 
     keyword = request.GET.get("keyword", "")
     keyword = keyword.strip()
-    page_num = request.GET.get("pn", 1)
+    page_num = request.GET.get("page_num", 1)
     page_num = int(page_num)
     site_classes = ["weibo", "miaopai", "weipai", "meipai",
         "vlook", "weipainv", "xiaoying", "xiaokaxiu",
@@ -64,7 +64,11 @@ def search_vid(request):
     logger.debug("search %s returned %d results", keyword, len(results))
     if len(results) == 0:
         return JsonResponse({"success": False, "msg": u"没有找到视频:("})
-    return JsonResponse({"success": True, "msg": "", "result": results})
+    return JsonResponse({"success": True,
+        "msg": "",
+        "result": results,
+        "keyword": keyword,
+        "next": page_num+1})
 
 def aboutus(request):
     return render(request, 'aboutus.html')
