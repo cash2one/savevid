@@ -13,6 +13,7 @@ import gifshow
 import v1
 import tumblr
 import mitaose
+import aishipin
 
 class SiteNotSupported(Exception):
     pass
@@ -29,6 +30,7 @@ site_class = {"weibo": weibo.Weibo,
     "v1": v1.V1,
     "tumblr": tumblr.Tumblr,
     "mitaose": mitaose.Mitaose,
+    "aishipin": aishipin.Aishipin,
     }
 
 class SiteFactory:
@@ -71,6 +73,8 @@ class SiteFactory:
                 self.site = tumblr.Tumblr()
             elif re.search(r"mitaose8.com", netloc):
                 self.site = mitaose.Mitaose()
+            elif re.search(r"aishipin.net", netloc):
+                self.site = aishipin.Aishipin()
             else:
                 raise SiteNotSupported()
 
