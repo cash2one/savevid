@@ -83,6 +83,6 @@ class Aishipin(Site):
 if __name__ == "__main__":
     site = Aishipin()
     print site.get_link('http://www.aishipin.net/wpfuli/784.html')
-    print site.get_link('http://www.aishipin.net/wpfuli/737.html')
+    print site.get_link('http://www.aishipin.net/wpfuli/744.html')
     print site.search_video('hello', 1, 2)
 

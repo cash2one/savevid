@@ -63,7 +63,7 @@ function loadmore(obj) {
                       </div> \
                       {{/img}} \
                       <div class="media-body"> \
-                        <h4 class="media-heading"><a href="{{ vid }}">{{ title }}</a></h4> \
+                        <h4 class="media-heading"><a target="_blank" href="{{ vid }}">{{ title }}</a></h4> \
                         <p>{{ desc }}</p> \
                         <!--<a class="btn btn-info" href="{{ vid }}" download="{{ vid }}">下载地址</a>--> \
                       </div> \
@@ -178,7 +178,7 @@ var downloader = {
                               </div> \
                               {{/img}} \
                               <div class="media-body"> \
-                                <h4 class="media-heading"><a href="{{ vid }}">{{ title }}</a></h4> \
+                                <h4 class="media-heading"><a target="_blank" href="{{ vid }}">{{ title }}</a></h4> \
                                 <p>{{ desc }}</p> \
                                 <!--<a class="btn btn-info" href="{{ vid }}" download="{{ vid }}">下载地址</a>--> \
                               </div> \
