@@ -26,7 +26,7 @@ def get_inner_html(elem):
     return text
 
 def get_orig_url(url):
-    r = requests.head(url, timeout=10)
+    r = requests.get(url, timeout=10, allow_redirects=False)
     if "Location" in r.headers:
         return r.headers["Location"]
     r = requests.get(url, timeout=10)

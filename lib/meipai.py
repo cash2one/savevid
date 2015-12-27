@@ -34,7 +34,7 @@ class Meipai(Site):
         url = "http://www.baidu.com/s?q1=%s&q2=&q3=&q4=&lm=0&ft=&q5=&q6=meipai.com&tn=baiduadv&pn=%d&rn=%d" % (keyword, start, num_per_page)
         try:
             r = requests.get(url, timeout=10)
-        except:
+        except Exception, e:
             return []
         result = r.text
         parser = etree.HTMLParser()
