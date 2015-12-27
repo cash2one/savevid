@@ -35,7 +35,7 @@ function sameOrigin(url) {
 }
 
 function loadmore(obj) {
-    var pager_html = '<li class="text-primary">加载中<img style="width:50px;" src="/static/img/loading.gif"></img></li>';
+    var pager_html = '<li class="text-primary">加载中<img style="width:32px;" src="/static/img/loading.gif"></img></li>';
     $('ul.pager').html(pager_html);
     $obj = $(obj);
     keyword = $obj.attr("keyword");
