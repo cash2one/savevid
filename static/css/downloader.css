@@ -27,6 +27,10 @@
     margin-top:20px;
 }
 
+.share {
+    margin-top:20px;
+}
+
 .tut img {
     width:100%;
 }
@@ -58,16 +62,19 @@
 
 .site-logo {
     float: left;
-    width: 64px;
-    margin-right:20px;
+    width: 32px;
+    margin-right:5px;
 }
 
 .site-logo p {
-    font-size: 14px;
+    font-size: 10px;
     color: #999;
     font-family: "Times New Roman", Georgia, Serif;
 }
 
+.site-logo img {
+    width: 32px;
+}
 .vid-img {
     height:100px;
 }
