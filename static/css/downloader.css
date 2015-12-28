@@ -16,7 +16,7 @@
 }
 
 .brand {
-    margin-top:100px;
+    margin-top:50px;
 }
 
 .brand h1 {
@@ -28,6 +28,7 @@
 }
 
 .share {
+    display:none;
     margin-top:20px;
 }
 
