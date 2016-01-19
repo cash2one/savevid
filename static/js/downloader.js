@@ -101,7 +101,7 @@ var downloader = {
         $('#download').click(function(e) {
             // init
             $('div.msg').empty();
-            $('.share').hide();
+            //$('.share').hide();
             var url = $('input[name="url"]').val();
             if(url == "") {
                 $('div.msg').html('请输入视频链接:');
@@ -134,7 +134,7 @@ var downloader = {
                         </div>';
                         var html = Mustache.render(tmpl, resp.result);
                         $("#result").html(html);
-                        $(".share").fadeIn(1000);
+                        //$(".share").fadeIn(1000);
                     }
                     else {
                         var tmpl_err = '<div class="alert alert-danger rs-status"><span class="glyphicon glyphicon-exclamation-sign"></span><span class="stat-text"> {{ msg }}</span></div>';
